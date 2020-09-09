@@ -5,23 +5,24 @@ using UnityEngine;
 
 public class DataManager : MonoBehaviour 
 {
-    public dialogueData dialogueData;
+    public dialogueData DialogueData = new dialogueData();
     private string file = "baseTest.json";
     public void Save()
     {
-        string json = JsonUtility.ToJson(dialogueData);
+        string json = JsonUtility.ToJson(DialogueData);
         WriteToFile(file, json);
     }
 
     public void Load()
     {
-        dialogueData = new dialogueData();
         string json = ReadFromFile(file);
         Debug.Log(json);
-        dialogueData.CharacterNickname = "b";
-        //JsonUtility.FromJson<dialogueData>(json);
-        JsonUtility.FromJsonOverwrite(json, dialogueData);
-        Debug.Log(dialogueData.CharacterNickname);
+        DialogueData = JsonUtility.FromJson<dialogueData>(json);
+        //DialogueData.CharacterNickname = "t";
+        //JsonUtility.FromJson<dialogueData>
+        //JsonUtility.FromJsonOverwrite(json, DialogueData);
+        Debug.Log(DialogueData.characterNickname);
+        //dialogueData[dialogueData.Count].Count++;
     }
 
     private void WriteToFile(string fileName, string json)

@@ -19,7 +19,7 @@ public class test : MonoBehaviour
         //dataManager.dialogueData.DialogueSequence = "a";
         //dataManager.Save();
         //dataManager.Load();
-        Debug.Log(dataManager.dialogueData.CharacterNickname);
+        Debug.Log(dataManager.DialogueData);
         save = true;
     }
     
@@ -29,6 +29,7 @@ public class test : MonoBehaviour
     {
         if (save && count != 1)
         {
+            
             count = 1;
             dataManager.Load();
         }

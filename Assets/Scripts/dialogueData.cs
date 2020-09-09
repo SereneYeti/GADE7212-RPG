@@ -5,31 +5,33 @@ using UnityEngine;
 [Serializable]
 public class dialogueData 
 {
-    public string CharacterNickname
-    {
-        get { return characterNickname; }
-        set{ characterNickname = value; }
-    }
-    private string characterNickname;
+    public dialogueData()
+    { }
+    public string characterNickname;
+    //{
+    //    get { return CharacterNickname; }
+    //    set { CharacterNickname = value; }
+    //}
+    //private string CharacterNickname;
 
-    public string DialogueSequence
-    {
-        get { return dialogueSequence; }
-        set { dialogueSequence = value; }
-    }
-    private string dialogueSequence;
+    public string dialogueSequence;
+    //{
+    //    get { return DialogueSequence; }
+    //    set { DialogueSequence = value; }
+    //}
+    //private string DialogueSequence;
 
-    public int LineNumber
-    {
-        get { return lineNumber; }
-        set { lineNumber = value; }
-    }
-    private int lineNumber;
+    public int lineNumber;
+    //{
+    //    get { return LineNumber; }
+    //    set { LineNumber = value; }
+    //}
+    //private int LineNumber;
 
-    public string[] CharacterLines
-    {
-        get { return characterLines; }
-        set { characterLines = value; }
-    }
-    private string[] characterLines;
+    public string[] characterLines;
+//    {
+//        get { return CharacterLines; }
+//        set { CharacterLines = value; }
+//    }
+//    private string[] CharacterLines;
 }
