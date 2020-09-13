@@ -429,7 +429,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &638572012
 MonoBehaviour:
@@ -620,7 +620,7 @@ Transform:
   m_LocalScale: {x: 5, y: 1, z: 5}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1107488256
 GameObject:
@@ -652,15 +652,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DialogueData:
+    characterID: 
     characterNickname: 
-    dialogueSequence: 
-    nextDialogueSequence: 
     reqInv: 
-    dialogueChoice: 
-    currentLineNumber: 0
-    endTalkArrPos: 0
-    characterLines: []
-  fileName: 
+    lineID: 0
+    endTalkPos: 0
+    characterLine: 
+    possibleResponses: 
 --- !u!4 &1107488258
 Transform:
   m_ObjectHideFlags: 0
@@ -673,7 +671,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1145444333
 GameObject:
@@ -898,6 +896,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31e9ac40bc588ea44aaec7fa21f6b92d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sNumLines: 0
+  fileExtention: .json
 --- !u!4 &1236169151
 Transform:
   m_ObjectHideFlags: 0
@@ -910,7 +910,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1254292006
 GameObject:
@@ -1057,7 +1057,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1458322688
 GameObject:
@@ -1468,7 +1468,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 20.146, y: 195.09, z: 0.001}
 --- !u!114 &1687258586
 MonoBehaviour:

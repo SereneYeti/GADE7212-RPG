@@ -7,33 +7,55 @@ using UnityEngine;
 public class DataManager : MonoBehaviour 
 {
     public dialogueData DialogueData = new dialogueData();
-    public readLines ReadLines = new readLines();
-    private string file = "sage2000.json";
+
+    #region arrayClasses
+    public readSage2000Lines ReadSage2000Lines = new readSage2000Lines();
+    public readFinThePhoneLines ReadFinThePhoneLines = new readFinThePhoneLines();
+    #endregion
+    public string file
+    {
+            get { return _file; }
+            set { _file = value; }
+        
+    }
+    private string _file = "sage2000.json";
     public void Save()
     {
         string json = JsonUtility.ToJson(DialogueData);
-        WriteToFile(file, json);
+        WriteToFile(_file, json);
     }
 
-    public void Load()
+    public void Load(string charID)
     {
         string json = ReadFromFile(file);
         //Debug.Log(json);
 
-        ReadLines = JsonUtility.FromJson<readLines>(json);
-        DialogueManager.Instance.ReadDataOutOfArray(ReadLines.sage2000Lines);
+        if(charID == CharacterIDs.s.ToString())
+        {
+            ReadSage2000Lines = JsonUtility.FromJson<readSage2000Lines>(json);
+            //Debug.Log(ReadLines.sage2000Lines[0].characterNickname);
+            DialogueManager.Instance.ReadDataOutOfArray(ReadSage2000Lines.sage2000Lines);
+        }
+        else if (charID == CharacterIDs.f.ToString())
+        {
+            ReadFinThePhoneLines = JsonUtility.FromJson<readFinThePhoneLines>(json);
+            //Debug.Log(ReadFinThePhoneLines.FinThePhoneLines[0].characterNickname);
+            DialogueManager.Instance.ReadDataOutOfArray(ReadFinThePhoneLines.FinThePhoneLines);
+        }
 
+        #region Commented out testing
         //DialogueManager.Instance.Sage2000Dialogue.Add(JsonUtility.FromJson<dialogueData>(json));
-        Debug.Log(DialogueManager.Instance.Sage2000Dialogue.Head.Data.characterLine);
+        //Debug.Log(DialogueManager.Instance.Sage2000Dialogue.Head.Data.characterLine);
 
         // DialogueManager.Instance.Sage2000Dialogue.Add(JsonUtility.FromJson<dialogueData>(json));
-        Debug.Log(DialogueManager.Instance.Sage2000Dialogue.Tail.Data.characterLine);
+        //Debug.Log(DialogueManager.Instance.Sage2000Dialogue.Tail.Data.characterLine);
 
         //DialogueData.CharacterNickname = "t";
         //JsonUtility.FromJson<dialogueData>
         //JsonUtility.FromJsonOverwrite(json, DialogueData);
 
         //dialogueData[dialogueData.Count].Count++;
+        #endregion
     }
 
     private void WriteToFile(string fileName, string json)
@@ -70,5 +92,5 @@ public class DataManager : MonoBehaviour
     private string GetFilePath(string FileName)
     {
         return Path.Combine(Application.persistentDataPath, FileName);
-    }
+    }    
 }

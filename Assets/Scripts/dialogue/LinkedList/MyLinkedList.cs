@@ -24,6 +24,8 @@ public class MyLinkedList<T>
         set;
     }
 
+    public int Length = 0;
+
     //Constructor. Just initialize the properties to null
     public MyLinkedList()
     {
@@ -40,6 +42,7 @@ public class MyLinkedList<T>
 
         //Set the data for the node to the content that was passed in.
         node.Data = content;
+        Length++;
 
         //If Head is null, that means that there are no nodes in the linked list
         if (Head == null)
@@ -65,10 +68,29 @@ public class MyLinkedList<T>
         Tail = node;
     }
 
-    public int GetPos(string charName, string sequence)
+    public (int, string, string) FindLine(MyLinkedList<dialogueData> list, int LineID)
     {
-        return 0;
+        MyNode<dialogueData> tempNode = list.Head;
+        MyNode<dialogueData> returnNode = null;
+
+        dialogueData tempData = new dialogueData();
+
+        while (tempNode != null)
+        {
+            if(tempNode.Data.lineID == LineID)
+            {
+                returnNode = tempNode;
+                break;
+            }
+            //all needed working must be done before tempNode = tempNode.Next
+            //goes to next element
+            tempNode = tempNode.Next;
+        }
+
+        return (returnNode.Data.lineID, returnNode.Data.characterLine, returnNode.Data.characterNickname);
     }
+
+
 
     public T Retrive(int position)
     {
@@ -110,6 +132,7 @@ public class MyLinkedList<T>
         //make the IDE complain, so we have to use this.
         return (returnNode != null) ? returnNode.Data : default(T);
     }
+   
 
     public bool Delete(int position)
     {
@@ -226,4 +249,5 @@ public class MyLinkedList<T>
         return returnNode.Data;
     }
 
+    
 } 

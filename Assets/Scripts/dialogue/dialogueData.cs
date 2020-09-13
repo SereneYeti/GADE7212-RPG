@@ -19,27 +19,35 @@ public class dialogueData
 
     public string reqInv;
 
-    public string lineID;
+    public int lineID;
     //{
     //    get { return LineNumber; }
     //    set { LineNumber = value; }
     //}
     //private int LineNumber;
 
-    public string endTalkPos;    
+    public int endTalkPos;    
 
     public string characterLine;
 
-    public string[] possibleResponses;
-    
+    public int[] possibleResponses;
+
     //    {
     //        get { return CharacterLines; }
     //        set { CharacterLines = value; }
     //    }
     //    private string[] CharacterLines;
+    public override string ToString()
+    {
+        return characterNickname + ": " + characterLine;
+    }
 }
 
-public class readLines : dialogueData
+public class readSage2000Lines : dialogueData
 {   //class used to read out the individual json dialogue data classes from the base json array used to store them
     public dialogueData[] sage2000Lines;
+}
+public class readFinThePhoneLines : dialogueData
+{   //class used to read out the individual json dialogue data classes from the base json array used to store them
+    public dialogueData[] FinThePhoneLines;
 }
