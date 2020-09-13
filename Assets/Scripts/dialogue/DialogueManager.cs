@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class DialogueManager : MonoBehaviour
 {
     #region Singleton Setup
@@ -25,4 +26,17 @@ public class DialogueManager : MonoBehaviour
     #endregion
 
     public MyLinkedList<dialogueData> Sage2000Dialogue = new MyLinkedList<dialogueData>();
+
+    public int sNumLines = 3;
+
+    public void ReadDataOutOfArray(dialogueData[] dialogues)
+    {
+        foreach (dialogueData d in dialogues)
+        {
+            DialogueManager.Instance.Sage2000Dialogue.Add(d);
+        }
+
+    }
 }
+
+

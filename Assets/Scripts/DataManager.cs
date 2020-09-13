@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -6,8 +7,8 @@ using UnityEngine;
 public class DataManager : MonoBehaviour 
 {
     public dialogueData DialogueData = new dialogueData();
-    private string file = "sage2000_A.json";
-    public string fileName = "sage2000_B.json";
+    public readLines ReadLines = new readLines();
+    private string file = "sage2000.json";
     public void Save()
     {
         string json = JsonUtility.ToJson(DialogueData);
@@ -18,16 +19,15 @@ public class DataManager : MonoBehaviour
     {
         string json = ReadFromFile(file);
         //Debug.Log(json);
-        //DialogueData = JsonUtility.FromJson<dialogueData>(json);
-         DialogueManager.Instance.Sage2000Dialogue.Add(JsonUtility.FromJson<dialogueData>(json));
-       // Debug.Log(DialogueData.characterNickname);
-         Debug.Log(DialogueManager.Instance.Sage2000Dialogue.Head.Data.dialogueSequence);
 
-        fileName = "sage2000_B.json";
-        file = fileName;
-        json = ReadFromFile(file);        
-        DialogueManager.Instance.Sage2000Dialogue.Add(JsonUtility.FromJson<dialogueData>(json));
-        Debug.Log(DialogueManager.Instance.Sage2000Dialogue.Tail.Data.dialogueSequence);
+        ReadLines = JsonUtility.FromJson<readLines>(json);
+        DialogueManager.Instance.ReadDataOutOfArray(ReadLines.sage2000Lines);
+
+        //DialogueManager.Instance.Sage2000Dialogue.Add(JsonUtility.FromJson<dialogueData>(json));
+        Debug.Log(DialogueManager.Instance.Sage2000Dialogue.Head.Data.characterLine);
+
+        // DialogueManager.Instance.Sage2000Dialogue.Add(JsonUtility.FromJson<dialogueData>(json));
+        Debug.Log(DialogueManager.Instance.Sage2000Dialogue.Tail.Data.characterLine);
 
         //DialogueData.CharacterNickname = "t";
         //JsonUtility.FromJson<dialogueData>
@@ -54,7 +54,7 @@ public class DataManager : MonoBehaviour
         if(File.Exists(path))
         {
             using(StreamReader reader = new StreamReader(path))
-            {
+            {               
                 string json = reader.ReadToEnd();
                 return json;
             }

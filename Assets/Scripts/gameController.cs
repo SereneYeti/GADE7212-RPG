@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class gameController : MonoBehaviour
 {
     public DataManager dataManager;
@@ -26,9 +27,7 @@ public class gameController : MonoBehaviour
 
             count = 1;
             dataManager.Load();
-            Debug.Log(DialogueManager.Instance.Sage2000Dialogue.Head.Data.characterLines[DialogueManager.Instance.Sage2000Dialogue.Head.Data.currentLineNumber]);
-            DialogueManager.Instance.Sage2000Dialogue.Head.Data.currentLineNumber++;
-            Debug.Log(DialogueManager.Instance.Sage2000Dialogue.Head.Data.characterLines[DialogueManager.Instance.Sage2000Dialogue.Head.Data.currentLineNumber]);
+            //Debug.Log(DialogueManager.Instance.Sage2000Dialogue.Head.Data.characterNickname);
         }
     }
 }
