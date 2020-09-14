@@ -11,6 +11,7 @@ public class DataManager : MonoBehaviour
     #region arrayClasses
     public readSage2000Lines ReadSage2000Lines = new readSage2000Lines();
     public readFinThePhoneLines ReadFinThePhoneLines = new readFinThePhoneLines();
+    public readSocialBotLines ReadSocialBotLines = new readSocialBotLines();
     #endregion
     public string file
     {
@@ -41,6 +42,12 @@ public class DataManager : MonoBehaviour
             ReadFinThePhoneLines = JsonUtility.FromJson<readFinThePhoneLines>(json);
             //Debug.Log(ReadFinThePhoneLines.FinThePhoneLines[0].characterNickname);
             DialogueManager.Instance.ReadDataOutOfArray(ReadFinThePhoneLines.FinThePhoneLines);
+        }
+        else if (charID == CharacterIDs.b.ToString())
+        {
+            ReadSocialBotLines = JsonUtility.FromJson<readSocialBotLines>(json);
+            //Debug.Log(ReadFinThePhoneLines.FinThePhoneLines[0].characterNickname);
+            DialogueManager.Instance.ReadDataOutOfArray(ReadSocialBotLines.SocialBotLines);
         }
 
         #region Commented out testing

@@ -5,12 +5,14 @@ using UnityEngine;
 public enum FileNames
 {
     sage2000,
-    finThePhone
+    finThePhone,
+    socialBot
 };
 public enum CharacterIDs
 {
     s,
-    f
+    f,
+    b
 }
 public class DialogueManager : MonoBehaviour
 {
@@ -36,8 +38,8 @@ public class DialogueManager : MonoBehaviour
 
     public MyLinkedList<dialogueData> Sage2000List = new MyLinkedList<dialogueData>();
     public MyLinkedList<dialogueData> FinThePhoneList = new MyLinkedList<dialogueData>();
+    public MyLinkedList<dialogueData> SocialBotList = new MyLinkedList<dialogueData>();
 
-    public int sNumLines = 3;
     public bool clicked = false;
     public string fileExtention = ".json";
     public void ReadDataOutOfArray(dialogueData[] dialogues)
@@ -51,6 +53,10 @@ public class DialogueManager : MonoBehaviour
             else if (d.characterID == CharacterIDs.f.ToString())
             {
                 FinThePhoneList.Add(d);
+            }
+            else if (d.characterID == CharacterIDs.b.ToString())
+            {
+                SocialBotList.Add(d);
             }
         }
 

@@ -10,7 +10,11 @@ public class dialogueData
 
     public string characterID;
 
+    public string interactingID;
+
     public string characterNickname;
+
+    public string dialogueSequence;
     //{
     //    get { return CharacterNickname; }
     //    set { CharacterNickname = value; }
@@ -50,4 +54,9 @@ public class readSage2000Lines : dialogueData
 public class readFinThePhoneLines : dialogueData
 {   //class used to read out the individual json dialogue data classes from the base json array used to store them
     public dialogueData[] FinThePhoneLines;
+}
+
+public class readSocialBotLines : dialogueData
+{   //class used to read out the individual json dialogue data classes from the base json array used to store them
+    public dialogueData[] SocialBotLines;
 }
