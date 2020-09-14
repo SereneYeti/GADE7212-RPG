@@ -40,7 +40,11 @@ public class DialogueManager : MonoBehaviour
     public MyLinkedList<dialogueData> FinThePhoneList = new MyLinkedList<dialogueData>();
     public MyLinkedList<dialogueData> SocialBotList = new MyLinkedList<dialogueData>();
 
+    public string currentInteraction;
+
     public bool clicked = false;
+    public int playerChoice = -1;
+    public bool playerChosen = false;
     public string fileExtention = ".json";
     public void ReadDataOutOfArray(dialogueData[] dialogues)
     {

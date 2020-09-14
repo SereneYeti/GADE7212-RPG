@@ -7,26 +7,33 @@ public class NPCController : MonoBehaviour
     public GameObject player;
         
     public Material m;
-    
-    bool canClick = false;
-    
+    public Material m2;
 
+    bool canClick = false;
+
+    public DialogueController dialogue;
     private void OnMouseDown()
     {        
         if (canClick)
         {
             DialogueManager.Instance.clicked = true;
-        }       
+        }
+        if(this.tag == CharacterIDs.s.ToString()) { DialogueManager.Instance.currentInteraction = CharacterIDs.s.ToString(); }
+        else if (this.tag == CharacterIDs.b.ToString()) { DialogueManager.Instance.currentInteraction = CharacterIDs.b.ToString(); dialogue.countFin = 9; }
     }
 
     private void OnMouseEnter()
     {
-        if (WithinDistance()) m.color = Color.green;
+        if (this.tag == CharacterIDs.s.ToString()) { if (WithinDistance()) m.color = Color.green; }
+        else if (this.tag == CharacterIDs.b.ToString()) { if (WithinDistance()) m.color = Color.red; }
+        
     }
 
     private void OnMouseExit()
     {
-        if (WithinDistance()) m.color = Color.yellow;
+        if (this.tag == CharacterIDs.s.ToString()) { if (WithinDistance()) m.color = Color.yellow; }
+        else if (this.tag == CharacterIDs.b.ToString()) { if (WithinDistance()) m.color = Color.black; }
+        
     }
 
     public bool WithinDistance()
@@ -40,8 +47,9 @@ public class NPCController : MonoBehaviour
     }
     private void Update()
     {
-        if (WithinDistance()) { canClick = true; m.color = Color.green; }
-        else { canClick = false; m.color = Color.yellow; }
+        if (this.tag == CharacterIDs.s.ToString()) { if (WithinDistance()) { canClick = true; m.color = Color.green; } else { canClick = false; m.color = Color.yellow; } }
+        else if (this.tag == CharacterIDs.b.ToString()) { if (WithinDistance()) { canClick = true; m.color = Color.red; } else { canClick = false; m.color = Color.black; } }
+        
 
 
     }

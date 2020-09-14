@@ -56,16 +56,14 @@ public class MyLinkedList<T>
         Tail = node;
     }
 
-    public (int, string, string) FindLine(MyLinkedList<dialogueData> list, int LineID)
+    public dialogueData FindNode(MyLinkedList<dialogueData> list, int LineID, string listnerID)
     {
         MyNode<dialogueData> tempNode = list.Head;
         MyNode<dialogueData> returnNode = null;
 
-        dialogueData tempData = new dialogueData();
-
         while (tempNode != null)
         {
-            if (tempNode.Data.lineID == LineID)
+            if (tempNode.Data.lineID == LineID&&tempNode.Data.interactingID==listnerID)
             {
                 returnNode = tempNode;
                 break;
@@ -75,10 +73,28 @@ public class MyLinkedList<T>
             tempNode = tempNode.Next;
         }
 
-        return (returnNode.Data.lineID, returnNode.Data.characterLine, returnNode.Data.characterNickname);
+        return (returnNode != null) ? returnNode.Data : default(dialogueData);
     }
 
+    public (string nickname, string line) FindLine(MyLinkedList<dialogueData> list, int LineID, string listnerID)
+    {
+        MyNode<dialogueData> tempNode = list.Head;
+        MyNode<dialogueData> returnNode = null;
 
+        while (tempNode != null)
+        {
+            if (tempNode.Data.lineID == LineID && tempNode.Data.interactingID == listnerID)
+            {
+                returnNode = tempNode;
+                break;
+            }
+            //all needed working must be done before tempNode = tempNode.Next
+            //goes to next element
+            tempNode = tempNode.Next;
+        }
+
+        return (returnNode.Data.characterNickname,returnNode.Data.characterLine);
+    }
 
     public T Retrive(int position)
     {

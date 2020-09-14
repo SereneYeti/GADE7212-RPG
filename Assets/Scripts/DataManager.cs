@@ -13,6 +13,7 @@ public class DataManager : MonoBehaviour
     public readFinThePhoneLines ReadFinThePhoneLines = new readFinThePhoneLines();
     public readSocialBotLines ReadSocialBotLines = new readSocialBotLines();
     #endregion
+
     public string file
     {
             get { return _file; }
