@@ -38,7 +38,7 @@ public class DialogueManager : MonoBehaviour
     public MyLinkedList<dialogueData> FinThePhoneList = new MyLinkedList<dialogueData>();
 
     public int sNumLines = 3;
-        
+    public bool clicked = false;
     public string fileExtention = ".json";
     public void ReadDataOutOfArray(dialogueData[] dialogues)
     {

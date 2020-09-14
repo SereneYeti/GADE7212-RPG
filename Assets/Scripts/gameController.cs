@@ -13,18 +13,18 @@ public class gameController : MonoBehaviour
        
         //dataManager.Save();
         //Load Sage2000 json
-        dataManager.file = FileNames.sage2000 + DialogueManager.Instance.fileExtention;
-        dataManager.Load(CharacterIDs.s.ToString());
-        //Load FinThePhone json
-        dataManager.file = FileNames.finThePhone + DialogueManager.Instance.fileExtention;
-        dataManager.Load(CharacterIDs.f.ToString());
+        //dataManager.file = FileNames.sage2000 + DialogueManager.Instance.fileExtention;
+        //dataManager.Load(CharacterIDs.s.ToString());
+        ////Load FinThePhone json
+        //dataManager.file = FileNames.finThePhone + DialogueManager.Instance.fileExtention;
+        //dataManager.Load(CharacterIDs.f.ToString());
 
-        Debug.Log("FOUND" + DialogueManager.Instance.Sage2000List.FindLine(DialogueManager.Instance.Sage2000List,-1));
-        for(int i = 0; i < DialogueManager.Instance.Sage2000List.Length; i ++)
-        {
-            Debug.Log(DialogueManager.Instance.Sage2000List.Retrive(i));
-            Debug.Log(DialogueManager.Instance.FinThePhoneList.Retrive(i));
-        }
+        //Debug.Log("FOUND" + DialogueManager.Instance.Sage2000List.FindLine(DialogueManager.Instance.Sage2000List,-1));
+        //for(int i = 0; i < DialogueManager.Instance.Sage2000List.Length; i ++)
+        //{
+        //    Debug.Log(DialogueManager.Instance.Sage2000List.Retrive(i));
+        //    Debug.Log(DialogueManager.Instance.FinThePhoneList.Retrive(i));
+        //}
         
     }
 

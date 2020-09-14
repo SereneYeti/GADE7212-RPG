@@ -15,9 +15,12 @@ public class CharcterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        character.Move(move * Time.deltaTime * Speed);
-        if (move != Vector3.zero)
-            transform.forward = move;
+        if (!DialogueManager.Instance.clicked)
+        {
+            Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+            character.Move(move * Time.deltaTime * Speed);
+            if (move != Vector3.zero)
+                transform.forward = move;
+        }            
     }
 }
