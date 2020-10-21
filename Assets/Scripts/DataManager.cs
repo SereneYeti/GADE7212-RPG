@@ -32,11 +32,10 @@ public class DataManager : MonoBehaviour
         //Debug.Log(json);
 
         fsdialogueA = JsonUtility.FromJson<fs_DialogueALines>(json);
-        //Debug.Log(fsdialogueA.fsDialogueALines[0].characterNickname);
-        DialogueManager.Instance.ReadDataOutOfArray(fsdialogueA.fsDialogueALines, DialogueManager.Instance.Fin_SageList);
+        Debug.Log(fsdialogueA.fsDialogueALines[0].dialogueSequence);
+        DialogueManager.Instance.ReadDataOutOfArray(fsdialogueA.fsDialogueALines, fsdialogueA.fsDialogueALines[0].dialogueSequence);
 
-        //fbdialogueA = JsonUtility.FromJson<fb_DialogueALines>(json);        
-        //DialogueManager.Instance.ReadDataOutOfArray(fbdialogueA.fbDialogueALines, DialogueManager.Instance.Fin_BotList);
+        
 
     }
 
@@ -46,8 +45,8 @@ public class DataManager : MonoBehaviour
         //Debug.Log(json);
 
         fbdialogueA = JsonUtility.FromJson<fb_DialogueALines>(json);
-        //Debug.Log(fbdialogueA.fbDialogueALines[0].characterNickname);
-        DialogueManager.Instance.ReadDataOutOfArray(fbdialogueA.fbDialogueALines, DialogueManager.Instance.Fin_BotList);
+        Debug.Log(fbdialogueA.fbDialogueALines[0].dialogueSequence);
+        DialogueManager.Instance.ReadDataOutOfArray(fbdialogueA.fbDialogueALines, fbdialogueA.fbDialogueALines[0].dialogueSequence);
 
     }
 

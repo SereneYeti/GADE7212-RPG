@@ -35,7 +35,6 @@ public class dialogueData
 
     public int[] possibleResponses;
 
-    public string startCharacterID;
     //    {
     //        get { return CharacterLines; }
     //        set { CharacterLines = value; }

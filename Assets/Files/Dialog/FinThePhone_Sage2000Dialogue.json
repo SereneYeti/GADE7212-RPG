@@ -3,7 +3,7 @@
         {
             "characterID": "s",
             "characterNickname": "Sage2000",
-            "dialogueSequence": "a",
+            "dialogueSequence": "fs1",
             "reqInv": "",
             "lineID": 0,
             "endTalkArrPos": -1,
@@ -16,7 +16,7 @@
             "characterID": "f",
             "startCharacterID" :  "s",
             "characterNickname": "FinThePhone",
-            "dialogueSequence": "A",
+            "dialogueSequence": "fs1",
             "reqInv": "",
             "lineID": 0,
             "endTalkArrPos": -1,
@@ -27,7 +27,7 @@
           },{
             "characterID": "s",
             "characterNickname": "Sage2000",
-            "dialogueSequence": "a",
+            "dialogueSequence": "fs1",
             "reqInv": "",
             "lineID": 1,
             "endTalkArrPos": -1,
@@ -38,9 +38,8 @@
             ]
         },{
             "characterID": "f",
-            "startCharacterID": "s",
             "characterNickname": "FinThePhone",
-            "dialogueSequence": "A",
+            "dialogueSequence": "fs1",
             "reqInv": "",
             "lineID": 1,
             "endTalkArrPos": -1,
@@ -51,7 +50,7 @@
           },{
             "characterID": "s",
             "characterNickname": "Sage2000",
-            "dialogueSequence": "a",
+            "dialogueSequence": "fs1",
             "reqInv": "",
             "lineID": 2,
             "endTalkArrPos": -1,
@@ -63,9 +62,8 @@
             ]
         }, {
             "characterID": "f",
-            "startCharacterID": "s",
             "characterNickname": "FinThePhone",
-            "dialogueSequence": "A",
+            "dialogueSequence": "fs1",
             "reqInv": "",
             "lineID": 2,
             "endTalkArrPos": -1,
@@ -76,7 +74,7 @@
           },{
             "characterID": "s",
             "characterNickname": "Sage2000",
-            "dialogueSequence": "a",
+            "dialogueSequence": "fs1",
             "reqInv": "",
             "lineID": 3,
             "endTalkArrPos": -1,
@@ -86,9 +84,8 @@
             ]
         },{
             "characterID": "f",
-            "startCharacterID": "s",
             "characterNickname": "FinThePhone",
-            "dialogueSequence": "A",
+            "dialogueSequence": "fs1",
             "reqInv": "",
             "lineID": 3,
             "endTalkPos": -1,
@@ -99,7 +96,7 @@
           },{
             "characterID": "s",
             "characterNickname": "Sage2000",
-            "dialogueSequence": "a",
+            "dialogueSequence": "fs1",
             "reqInv": "",
             "lineID": 7,
             "endTalkArrPos": -1,
@@ -109,9 +106,8 @@
             ]
         },{
             "characterID": "f",
-            "startCharacterID": "s",
             "characterNickname": "FinThePhone",
-            "dialogueSequence": "A",
+            "dialogueSequence": "fs1",
             "reqInv": "",
             "lineID": 4,
             "endTalkPos": -1,
@@ -122,7 +118,7 @@
           },{
             "characterID": "s",
             "characterNickname": "Sage2000",
-            "dialogueSequence": "a",
+            "dialogueSequence": "fs1",
             "reqInv": "",
             "lineID": 4,
             "endTalkArrPos": -1,
@@ -133,9 +129,8 @@
         },
         {
             "characterID": "f",
-            "startCharacterID": "s",
             "characterNickname": "FinThePhone",
-            "dialogueSequence": "A",
+            "dialogueSequence": "fs1",
             "reqInv": "",
             "lineID": 4,
             "endTalkPos": -1,
@@ -146,7 +141,7 @@
           },{
             "characterID": "s",
             "characterNickname": "Sage2000",
-            "dialogueSequence": "a",
+            "dialogueSequence": "fs1",
             "reqInv": "",
             "lineID": 5,
             "endTalkArrPos": -1,
@@ -156,9 +151,8 @@
             ]
         },{
             "characterID": "f",
-            "startCharacterID": "s",
             "characterNickname": "FinThePhone",
-            "dialogueSequence": "A",
+            "dialogueSequence": "fs1",
             "reqInv": "",
             "lineID": 5,
             "endTalkPos": -1,
@@ -169,7 +163,7 @@
           }, {
             "characterID": "s",
             "characterNickname": "Sage2000",
-            "dialogueSequence": "a",
+            "dialogueSequence": "fs1",
             "reqInv": "",
             "lineID": 6,
             "endTalkArrPos": -1,
@@ -179,9 +173,8 @@
             ]
         }, {
             "characterID": "f",
-            "startCharacterID": "s",
             "characterNickname": "FinThePhone",
-            "dialogueSequence": "A",
+            "dialogueSequence": "fs1",
             "reqInv": "",
             "lineID": 6,
             "endTalkPos": -1,
@@ -192,7 +185,7 @@
           },{
             "characterID": "s",
             "characterNickname": "Sage2000",
-            "dialogueSequence": "a",
+            "dialogueSequence": "fs1",
             "reqInv": "",
             "lineID": -1,
             "endTalkPos": -1,
@@ -202,9 +195,8 @@
             ]
         },{
             "characterID": "f",
-            "startCharacterID": "s",
             "characterNickname": "FinThePhone",
-            "dialogueSequence": "A",
+            "dialogueSequence": "fs1",
             "reqInv": "",
             "lineID": -1,
             "endTalkPos": -1,

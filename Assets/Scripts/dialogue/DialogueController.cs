@@ -24,6 +24,9 @@ public class DialogueController : MonoBehaviour
 
     MyNode<dialogueData> socialB = new MyNode<dialogueData>();
     MyNode<dialogueData> sage = new MyNode<dialogueData>();
+
+    MyNode<dialogueData> Fin_SocialB = new MyNode<dialogueData>();
+    MyNode<dialogueData> Fin_Sage = new MyNode<dialogueData>();
     #endregion
 
     public string interactingID;
@@ -66,40 +69,17 @@ public class DialogueController : MonoBehaviour
         if (interactingID == "s")
         {   //Sage2000 Interaction
 
-            sFin = DialogueManager.Instance.FinThePhoneList.Head;
-            sage = DialogueManager.Instance.Sage2000List.Head;
-            
-            //Futher Check To Determine starting character
-            if(sFin.Data.startCharacterID == "s")
-            {
-                txtCharacterName.text = sage.Data.characterNickname;
-                txtDisplay.text = sage.Data.characterLine;
-                currentID = "s";
-            }
-            else if (sFin.Data.startCharacterID == "f")
-            {
-                txtCharacterName.text = sFin.Data.characterNickname;
-                txtDisplay.text = sFin.Data.characterLine;
-                currentID = "f";
-            }
+            Fin_Sage = DialogueManager.Instance.Fin_SageList1.Head;
+            Debug.Log(DialogueManager.Instance.Fin_SageList1.Head.Data.characterLine);
+            txtCharacterName.text = Fin_Sage.Data.characterNickname;
+            txtDisplay.text = Fin_Sage.Data.characterLine;            
         }
         else if (DialogueManager.Instance.currentInteraction == "b")
         {   //SocialBot Interaction
-            //bFin = DialogueManager.Instance.FinThePhoneList.RetriveInteractionHead(DialogueManager.Instance.FinThePhoneList, interactingID);
-            socialB = DialogueManager.Instance.SocialBotList.Head;
+            Fin_SocialB = DialogueManager.Instance.Fin_BotList1.Head;
             //Futher Check To Determine starting character
-            if (bFin.Data.startCharacterID == "b")
-            {
-                txtCharacterName.text = socialB.Data.characterNickname;
-                txtDisplay.text = socialB.Data.characterLine;
-                currentID = "b";
-            }
-            else if (bFin.Data.startCharacterID == "f")
-            {
-                txtCharacterName.text = bFin.Data.characterNickname;
-                txtDisplay.text = bFin.Data.characterLine;
-                currentID = "f";
-            }
+            txtCharacterName.text = Fin_SocialB.Data.characterNickname;
+            txtDisplay.text = Fin_SocialB.Data.characterLine;
         }
 
     }
@@ -109,59 +89,21 @@ public class DialogueController : MonoBehaviour
         if (interactingID == "s")
         {   //Sage2000 Interaction
 
-            if (sFin.Next != null && sage.Next != null)
+            if (Fin_Sage.Next != null)
             {
-                sFin = sFin.Next;
-                sage = sage.Next;
+                Fin_Sage = Fin_Sage.Next;
+                txtCharacterName.text = Fin_Sage.Data.characterNickname;
+                txtDisplay.text = Fin_Sage.Data.characterLine;
             }
-            else if(sage.Next == null)
-            {
-                #region Set GameObjects False
-                pnlDisplay.SetActive(false);
-                pnlCharacterName.SetActive(false);
-                txtDisplay.gameObject.SetActive(false);
-                txtCharacterName.gameObject.SetActive(false);
-                btnNext.gameObject.SetActive(false);
-                btnPrevious.gameObject.SetActive(false);
-                txtNext.gameObject.SetActive(false);
-                txtPrevious.gameObject.SetActive(false);
-                #endregion
-            }
-            //Futher Check To Determine starting character
-            if (currentID == "s")
-            {
-                txtCharacterName.text = sFin.Previous.Data.characterNickname;
-                txtDisplay.text = sFin.Previous.Data.characterLine;
-                currentID = "f";
-                
-            }
-            else if (currentID == "f")
-            {
-                txtCharacterName.text = sage.Previous.Data.characterNickname;
-                txtDisplay.text = sage.Previous.Data.characterLine;
-                currentID = "s";
-            }
+            
         }
         else if (DialogueManager.Instance.currentInteraction == "b")
         {   //SocialBot Interaction
-            if (bFin.Next != null && socialB.Next != null)
+            if (Fin_Sage.Next != null)
             {
-                bFin = bFin.Next;
-                socialB = socialB.Next;
-            }              
-            //Futher Check To Determine starting character
-            if (currentID == "b")
-            {
-                txtCharacterName.text = bFin.Previous.Data.characterNickname;
-                txtDisplay.text = bFin.Previous.Data.characterLine;
-                currentID = "f";
-
-            }
-            else if (currentID == "f")
-            {
-                txtCharacterName.text = socialB.Previous.Data.characterNickname;
-                txtDisplay.text = socialB.Previous.Data.characterLine;
-                currentID = "b";
+                Fin_SocialB = Fin_SocialB.Next;
+                txtCharacterName.text = Fin_SocialB.Data.characterNickname;
+                txtDisplay.text = Fin_SocialB.Data.characterLine;
             }
         }
     }
@@ -172,47 +114,20 @@ public class DialogueController : MonoBehaviour
         if (interactingID == "s")
         {   //Sage2000 Interaction
 
-            if(sFin.Previous != null && sage.Previous != null)
+            if(Fin_Sage.Previous != null)
             {
-                sFin = sFin.Next;
-                sage = sage.Next;
-            }            
-            //Futher Check To Determine starting character
-            if (currentID == "s")
-            {
-                txtCharacterName.text = sFin.Data.characterNickname;
-                txtDisplay.text = sFin.Data.characterLine;
-                currentID = "f";
-
-            }
-            else if (currentID == "f")
-            {
-                txtCharacterName.text = sage.Data.characterNickname;
-                txtDisplay.text = sage.Data.characterLine;
-                currentID = "s";
-            }
+                Fin_Sage = Fin_Sage.Previous;
+                txtCharacterName.text = Fin_Sage.Data.characterNickname;
+                txtDisplay.text = Fin_Sage.Data.characterLine;
+            }          
         }
         else if (DialogueManager.Instance.currentInteraction == "b")
         {   //SocialBot Interaction
-
-            if (bFin.Previous != null && socialB.Previous != null)
+            if (Fin_Sage.Next != null)
             {
-                bFin = bFin.Next;
-                socialB = socialB.Next;
-            }
-            //Futher Check To Determine starting character
-            if (currentID == "b")
-            {
-                txtCharacterName.text = bFin.Data.characterNickname;
-                txtDisplay.text = bFin.Data.characterLine;
-                currentID = "f";
-
-            }
-            else if (currentID == "f")
-            {
-                txtCharacterName.text = socialB.Data.characterNickname;
-                txtDisplay.text = socialB.Data.characterLine;
-                currentID = "b";
+                Fin_SocialB = Fin_SocialB.Previous;
+                txtCharacterName.text = Fin_SocialB.Data.characterNickname;
+                txtDisplay.text = Fin_SocialB.Data.characterLine;
             }
         }
     }

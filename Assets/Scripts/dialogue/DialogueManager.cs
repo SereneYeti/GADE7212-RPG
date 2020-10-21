@@ -44,8 +44,8 @@ public class DialogueManager : MonoBehaviour
     public MyLinkedList<dialogueData> FinThePhoneList = new MyLinkedList<dialogueData>();
     public MyLinkedList<dialogueData> SocialBotList = new MyLinkedList<dialogueData>();
 
-    public MyLinkedList<dialogueData> Fin_SageList = new MyLinkedList<dialogueData>();
-    public MyLinkedList<dialogueData> Fin_BotList = new MyLinkedList<dialogueData>();
+    public MyLinkedList<dialogueData> Fin_SageList1 = new MyLinkedList<dialogueData>();
+    public MyLinkedList<dialogueData> Fin_BotList1 = new MyLinkedList<dialogueData>();
 
     public string currentInteraction;
 
@@ -53,12 +53,19 @@ public class DialogueManager : MonoBehaviour
     public int playerChoice = -1;
     public bool playerChosen = false;
     public string fileExtention = ".json";
-    public void ReadDataOutOfArray(dialogueData[] dialogues, MyLinkedList<dialogueData> list)
+    public void ReadDataOutOfArray(dialogueData[] dialogues, string dialogueSequence)
     {
-        list = new MyLinkedList<dialogueData>();
+        Debug.Log("I");
         foreach (dialogueData d in dialogues)
         {
-            list.Add(d);
+           if(dialogueSequence == "fs1")
+            {
+                Fin_SageList1.Add(d);
+            }
+           else if (dialogueSequence == "fb1")
+            {
+                Fin_BotList1.Add(d);
+            }
         }
 
     }
@@ -69,13 +76,15 @@ public class DialogueManager : MonoBehaviour
         dataManager.file = FileNames.FinThePhone_Sage2000Dialogue + DialogueManager.Instance.fileExtention;
         //Debug.Log(dataManager.file);
         dataManager.LoadFS();
+        Debug.Log(DialogueManager.Instance.Fin_SageList1.Head.Data.characterLine);
         //Load FinThePhone json
         dataManager.file = FileNames.FinThePhone_SocialBotDialogue + DialogueManager.Instance.fileExtention;
         dataManager.LoadFB();
+        Debug.Log(DialogueManager.Instance.Fin_BotList1.Head.Data.characterLine);
         //Load SocialBot json
         //dataManager.file = FileNames.socialBot + DialogueManager.Instance.fileExtention;
         //dataManager.Load(CharacterIDs.b.ToString());
-        
+
     }
 }
 
