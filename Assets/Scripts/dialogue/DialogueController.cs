@@ -72,7 +72,7 @@ public class DialogueController : MonoBehaviour
         {   //Sage2000 Interaction
 
             Fin_Sage = DialogueManager.Instance.Fin_SageList1.Head;
-            Debug.Log(DialogueManager.Instance.Fin_SageList1.Head.Data.characterLine);
+            //Debug.Log(DialogueManager.Instance.Fin_SageList1.Head.Data.characterLine);
             txtCharacterName.text = Fin_Sage.Data.characterNickname;
             txtDisplay.text = Fin_Sage.Data.characterLine;            
         }
