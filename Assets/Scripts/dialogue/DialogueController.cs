@@ -14,6 +14,7 @@ public class DialogueController : MonoBehaviour
     public TextMeshProUGUI txtCharacterName;
     public Button btnNext;
     public Button btnPrevious;
+    public Button btnCloseChat;
     public TextMeshProUGUI txtNext;
     public TextMeshProUGUI txtPrevious;
     #endregion
@@ -56,14 +57,15 @@ public class DialogueController : MonoBehaviour
         
 
         #region Set GameObjects Active
-        pnlDisplay.SetActive(true);
+            pnlDisplay.SetActive(true);
             pnlCharacterName.SetActive(true);
             txtDisplay.gameObject.SetActive(true);
             txtCharacterName.gameObject.SetActive(true);
-        btnNext.gameObject.SetActive(true);
-        btnPrevious.gameObject.SetActive(true);
-        txtNext.gameObject.SetActive(true);
-        txtPrevious.gameObject.SetActive(true);
+            btnNext.gameObject.SetActive(true);
+            btnPrevious.gameObject.SetActive(true);
+            txtNext.gameObject.SetActive(true);
+            txtPrevious.gameObject.SetActive(true);
+            btnCloseChat.gameObject.SetActive(true);
         #endregion
         //Dialogue Handled Beneath       
         if (interactingID == "s")
@@ -95,15 +97,23 @@ public class DialogueController : MonoBehaviour
                 txtCharacterName.text = Fin_Sage.Data.characterNickname;
                 txtDisplay.text = Fin_Sage.Data.characterLine;
             }
-            
+            else
+            {
+                EndDialogue();
+            }
+
         }
-        else if (DialogueManager.Instance.currentInteraction == "b")
+        else if (interactingID == "b")
         {   //SocialBot Interaction
-            if (Fin_Sage.Next != null)
+            if (Fin_SocialB.Next != null)
             {
                 Fin_SocialB = Fin_SocialB.Next;
                 txtCharacterName.text = Fin_SocialB.Data.characterNickname;
                 txtDisplay.text = Fin_SocialB.Data.characterLine;
+            }
+            else
+            {
+                EndDialogue();
             }
         }
     }
@@ -123,7 +133,7 @@ public class DialogueController : MonoBehaviour
         }
         else if (DialogueManager.Instance.currentInteraction == "b")
         {   //SocialBot Interaction
-            if (Fin_Sage.Next != null)
+            if (Fin_SocialB.Previous != null)
             {
                 Fin_SocialB = Fin_SocialB.Previous;
                 txtCharacterName.text = Fin_SocialB.Data.characterNickname;
@@ -132,6 +142,21 @@ public class DialogueController : MonoBehaviour
         }
     }
 
+    public void EndDialogue()
+    {
+        DialogueManager.Instance.clicked = false;
+        #region Set GameObjects Active - False
+        pnlDisplay.SetActive(false);
+        pnlCharacterName.SetActive(false);
+        txtDisplay.gameObject.SetActive(false);
+        txtCharacterName.gameObject.SetActive(false);
+        btnNext.gameObject.SetActive(false);
+        btnPrevious.gameObject.SetActive(false);
+        txtNext.gameObject.SetActive(false);
+        txtPrevious.gameObject.SetActive(false);
+        btnCloseChat.gameObject.SetActive(false);
+        #endregion
+    }
     public void QuitGame()
     {
         Application.Quit();

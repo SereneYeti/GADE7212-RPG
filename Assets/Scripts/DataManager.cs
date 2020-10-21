@@ -32,7 +32,7 @@ public class DataManager : MonoBehaviour
         //Debug.Log(json);
 
         fsdialogueA = JsonUtility.FromJson<fs_DialogueALines>(json);
-        Debug.Log(fsdialogueA.fsDialogueALines[0].dialogueSequence);
+        //Debug.Log(fsdialogueA.fsDialogueALines[0].dialogueSequence);
         DialogueManager.Instance.ReadDataOutOfArray(fsdialogueA.fsDialogueALines, fsdialogueA.fsDialogueALines[0].dialogueSequence);
 
         
@@ -45,7 +45,7 @@ public class DataManager : MonoBehaviour
         //Debug.Log(json);
 
         fbdialogueA = JsonUtility.FromJson<fb_DialogueALines>(json);
-        Debug.Log(fbdialogueA.fbDialogueALines[0].dialogueSequence);
+        //Debug.Log(fbdialogueA.fbDialogueALines[0].dialogueSequence);
         DialogueManager.Instance.ReadDataOutOfArray(fbdialogueA.fbDialogueALines, fbdialogueA.fbDialogueALines[0].dialogueSequence);
 
     }

@@ -55,7 +55,7 @@ public class DialogueManager : MonoBehaviour
     public string fileExtention = ".json";
     public void ReadDataOutOfArray(dialogueData[] dialogues, string dialogueSequence)
     {
-        Debug.Log("I");
+        //Debug.Log("I");
         foreach (dialogueData d in dialogues)
         {
            if(dialogueSequence == "fs1")
@@ -76,11 +76,11 @@ public class DialogueManager : MonoBehaviour
         dataManager.file = FileNames.FinThePhone_Sage2000Dialogue + DialogueManager.Instance.fileExtention;
         //Debug.Log(dataManager.file);
         dataManager.LoadFS();
-        Debug.Log(DialogueManager.Instance.Fin_SageList1.Head.Data.characterLine);
+        //Debug.Log(DialogueManager.Instance.Fin_SageList1.Head.Data.characterLine);
         //Load FinThePhone json
         dataManager.file = FileNames.FinThePhone_SocialBotDialogue + DialogueManager.Instance.fileExtention;
         dataManager.LoadFB();
-        Debug.Log(DialogueManager.Instance.Fin_BotList1.Head.Data.characterLine);
+        //Debug.Log(DialogueManager.Instance.Fin_BotList1.Head.Data.characterLine);
         //Load SocialBot json
         //dataManager.file = FileNames.socialBot + DialogueManager.Instance.fileExtention;
         //dataManager.Load(CharacterIDs.b.ToString());
