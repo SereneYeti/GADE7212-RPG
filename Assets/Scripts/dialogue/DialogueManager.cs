@@ -4,14 +4,16 @@ using UnityEngine;
 
 public enum FileNames
 {
-    sage2000,
-    finThePhone,
-    socialBot
+    FinThePhone_Sage2000Dialogue,
+    FinThePhone_SocialBotDialogue    
 };
 public enum CharacterIDs
 {
+    //Sage2000
     s,
+    //FinThePhone
     f,
+    //SocialBot
     b
 }
 public class DialogueManager : MonoBehaviour
@@ -35,10 +37,15 @@ public class DialogueManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
     #endregion
+    public DataManager dataManager;
+    //public playerData playerData;
 
     public MyLinkedList<dialogueData> Sage2000List = new MyLinkedList<dialogueData>();
     public MyLinkedList<dialogueData> FinThePhoneList = new MyLinkedList<dialogueData>();
     public MyLinkedList<dialogueData> SocialBotList = new MyLinkedList<dialogueData>();
+
+    public MyLinkedList<dialogueData> Fin_SageList = new MyLinkedList<dialogueData>();
+    public MyLinkedList<dialogueData> Fin_BotList = new MyLinkedList<dialogueData>();
 
     public string currentInteraction;
 
@@ -46,24 +53,29 @@ public class DialogueManager : MonoBehaviour
     public int playerChoice = -1;
     public bool playerChosen = false;
     public string fileExtention = ".json";
-    public void ReadDataOutOfArray(dialogueData[] dialogues)
+    public void ReadDataOutOfArray(dialogueData[] dialogues, MyLinkedList<dialogueData> list)
     {
+        list = new MyLinkedList<dialogueData>();
         foreach (dialogueData d in dialogues)
         {
-            if(d.characterID == CharacterIDs.s.ToString())
-            {
-                Sage2000List.Add(d);
-            }
-            else if (d.characterID == CharacterIDs.f.ToString())
-            {
-                FinThePhoneList.Add(d);
-            }
-            else if (d.characterID == CharacterIDs.b.ToString())
-            {
-                SocialBotList.Add(d);
-            }
+            list.Add(d);
         }
 
+    }
+
+    public void LoadAllLists()
+    {
+        //Load Sage2000 json
+        dataManager.file = FileNames.FinThePhone_Sage2000Dialogue + DialogueManager.Instance.fileExtention;
+        //Debug.Log(dataManager.file);
+        dataManager.LoadFS();
+        //Load FinThePhone json
+        dataManager.file = FileNames.FinThePhone_SocialBotDialogue + DialogueManager.Instance.fileExtention;
+        dataManager.LoadFB();
+        //Load SocialBot json
+        //dataManager.file = FileNames.socialBot + DialogueManager.Instance.fileExtention;
+        //dataManager.Load(CharacterIDs.b.ToString());
+        
     }
 }
 

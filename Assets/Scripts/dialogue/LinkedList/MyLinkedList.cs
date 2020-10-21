@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 
 public class MyLinkedList<T>
@@ -21,7 +22,6 @@ public class MyLinkedList<T>
         get;
         set;
     }
-
 
     public int Length = 0;
 
@@ -45,55 +45,45 @@ public class MyLinkedList<T>
         if (Head == null)
         {
             Head = node;
+            Head.Previous = null;
         }
         //At least 1 note in the list already
         else
         {
             //Take the Tail Node, which is the last one in the list, and set it's Next property which was null, to the new node we just created.
             Tail.Next = node;
+            //Set the new Tail i.e node's previous to the old tail
+            node.Previous = Tail;
         }
 
         Tail = node;
     }
 
-    public dialogueData FindNode(MyLinkedList<dialogueData> list, int LineID, string listnerID)
+    public void AddToFront(T content)
     {
-        MyNode<dialogueData> tempNode = list.Head;
-        MyNode<dialogueData> returnNode = null;
-
-        while (tempNode != null)
-        {
-            if (tempNode.Data.lineID == LineID&&tempNode.Data.interactingID==listnerID)
-            {
-                returnNode = tempNode;
-                break;
-            }
-            //all needed working must be done before tempNode = tempNode.Next
-            //goes to next element
-            tempNode = tempNode.Next;
-        }
-
-        return (returnNode != null) ? returnNode.Data : default(dialogueData);
+        MyNode<T> oldFirst = Head;
+        Head = new MyNode<T>();
+        //Set the data on the node
+        Head.Data = content;
+        //Make Head's Next point to the old First
+        Head.Next = oldFirst;
+        //Set the old firsts previous to the new first
+        oldFirst.Previous = Head;
+        Length++;
     }
 
-    public (string nickname, string line) FindLine(MyLinkedList<dialogueData> list, int LineID, string listnerID)
+    public void AddToEnd(T data)
     {
-        MyNode<dialogueData> tempNode = list.Head;
-        MyNode<dialogueData> returnNode = null;
+        MyNode<T> temp = new MyNode<T>();
+        temp.Data = data;
 
-        while (tempNode != null)
-        {
-            if (tempNode.Data.lineID == LineID && tempNode.Data.interactingID == listnerID)
-            {
-                returnNode = tempNode;
-                break;
-            }
-            //all needed working must be done before tempNode = tempNode.Next
-            //goes to next element
-            tempNode = tempNode.Next;
-        }
+        MyNode<T> p = Head;
+        while (p.Next != null)
+            p = p.Next;
 
-        return (returnNode.Data.characterNickname,returnNode.Data.characterLine);
+        p.Next = temp;
+        temp.Previous = p;
+        Length++;
     }
 
     public T Retrive(int position)
@@ -119,7 +109,6 @@ public class MyLinkedList<T>
         }
         return (returnNode != null) ? returnNode.Data : default(T);
     }
-
 
     public bool Delete(int position)
     {
@@ -186,24 +175,105 @@ public class MyLinkedList<T>
         return returnBool;
     }
 
-    public void AddToFront(T content)
+    public void DeleteFirstNode()
     {
-        MyNode<T> oldFirst = Head;
-        Head = new MyNode<T>();
-        //Set the data on the node
-        Head.Data = content;
-        //Make Head's Next point to the old First
-        Head.Next = oldFirst;
+        // if list is empty
+        if (Head == null)
+            return;
+
+        // if list has only one node
+        if (Head.Next == null)
+        {
+            // delete node
+            Head = null;
+            return;
+        }
+
+        // delete first node
+        Head = Head.Next;
+        Head.Previous = null;
     }
 
-    public T RemoveFromFront()
+    public void DeleteLastNode()
     {
-        MyNode<T> returnNode = Head;
-        Head = Head.Next;
+        // list is empty
         if (Head == null)
+            return;
+
+        // if list has only one node
+        if (Head.Next == null)
         {
-            Tail = null;
+            // delete node
+            Head = null;
+            return;
         }
-        return returnNode.Data;
+
+        // find reference to the last node 
+        MyNode<T> p = Head;
+        while (p.Next != null)
+            p = p.Next;
+        // delete last node
+        p.Previous.Next = null;
     }
-} 
+
+    public void ReverseList()
+    {
+        if (Head == null)
+            return;
+
+        MyNode<T> p1 = Head;
+        MyNode<T> p2 = p1.Next;
+        p1.Next = null;
+        p1.Previous = p2;
+        while (p2 != null)
+        {
+            p2.Previous = p2.Next;
+            p2.Next = p1;
+            p1 = p2;
+            p2 = p2.Previous;
+        }
+        Head = p1;
+    }
+
+    ////Old Methods No Longer In Use
+    //public dialogueData FindNode(MyLinkedList<dialogueData> list, int LineID, string listnerID)
+    //{
+    //    MyNode<dialogueData> tempNode = list.Head;
+    //    MyNode<dialogueData> returnNode = null;
+
+    //    while (tempNode != null)
+    //    {
+    //        if (tempNode.Data.lineID == LineID && tempNode.Data.interactingID == listnerID)
+    //        {
+    //            returnNode = tempNode;
+    //            break;
+    //        }
+    //        //all needed working must be done before tempNode = tempNode.Next
+    //        //goes to next element
+    //        tempNode = tempNode.Next;
+    //    }
+
+    //    return (returnNode != null) ? returnNode.Data : default(dialogueData);
+    //}
+
+
+    //public (string nickname, string line) FindLine(MyLinkedList<dialogueData> list, int LineID, string listnerID)
+    //{
+    //    MyNode<dialogueData> tempNode = list.Head;
+    //    MyNode<dialogueData> returnNode = null;
+
+    //    while (tempNode != null)
+    //    {
+    //        if (tempNode.Data.lineID == LineID && tempNode.Data.interactingID == listnerID)
+    //        {
+    //            returnNode = tempNode;
+    //            break;
+    //        }
+    //        //all needed working must be done before tempNode = tempNode.Next
+    //        //goes to next element
+    //        tempNode = tempNode.Next;
+    //    }
+
+    //    return (returnNode.Data.characterNickname, returnNode.Data.characterLine);
+    //}
+}

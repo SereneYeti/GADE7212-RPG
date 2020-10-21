@@ -2,74 +2,218 @@
 using TMPro;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEditorInternal;
 
 public class DialogueController : MonoBehaviour
 {
-    public DataManager dataManager;
-
+    #region DisplayObjects
     Image pnlDisplayMaterial;
     public GameObject pnlDisplay;
     public GameObject pnlCharacterName;
     public TextMeshProUGUI txtDisplay;
     public TextMeshProUGUI txtCharacterName;
+    public Button btnNext;
+    public Button btnPrevious;
+    public TextMeshProUGUI txtNext;
+    public TextMeshProUGUI txtPrevious;
+    #endregion
 
-    public dialogueData tempData;
-    dialogueData response = new dialogueData();
-    public Button btnOption1;
-    public Button btnOption2;
-    public Button btnOption3;
-    public TextMeshProUGUI txtOption1;
-    public TextMeshProUGUI txtOption2;
-    public TextMeshProUGUI txtOption3;
+    #region CharacterNodes
+    MyNode<dialogueData> sFin = new MyNode<dialogueData>();
+    MyNode<dialogueData> bFin = new MyNode<dialogueData>();
 
-    public int _lineID = 0;
+    MyNode<dialogueData> socialB = new MyNode<dialogueData>();
+    MyNode<dialogueData> sage = new MyNode<dialogueData>();
+    #endregion
 
-    string interactingID;
-
-    int countSage;
-    int countSocial;
+    public string interactingID;
+    private string currentID;
+    //int countSage;
+    //int countSocial;
     public int countFin;
-    int speaker;
+    //int speaker;
     public bool ReadLine = false;
     private void Start()
     {
-        countSage = 0;
-        countFin = 0;
-        countSocial = 0;
-        speaker = -1;
-        //Load Sage2000 json
-        dataManager.file = FileNames.sage2000 + DialogueManager.Instance.fileExtention;
-        //Debug.Log(dataManager.file);
-        dataManager.Load(CharacterIDs.s.ToString());
-        //Load FinThePhone json
-        dataManager.file = FileNames.finThePhone + DialogueManager.Instance.fileExtention;
-        dataManager.Load(CharacterIDs.f.ToString());
-        //Load SocialBot json
-        dataManager.file = FileNames.socialBot + DialogueManager.Instance.fileExtention;
-        dataManager.Load(CharacterIDs.b.ToString());
+        //countSage = 0;
+        //countFin = 0;
+        //countSocial = 0;
+        //speaker = -1;
+        interactingID = "";
+
+        DialogueManager.Instance.LoadAllLists();
 
         //Debug.Log(DialogueManager.Instance.SocialBotList.Head.Data.characterNickname);
         pnlDisplayMaterial = pnlDisplay.GetComponent<Image>();
-        tempData = DialogueManager.Instance.FinThePhoneList.Head.Data;
+        EventManager.Instance.AddListener(EVENT_TYPE.NPC_Click, EnterDialogue);
     }
 
-    void ChangeBtnVis(int numChoices, bool vis)
+    public void EnterDialogue(EVENT_TYPE Event_Type, Component Sender, object Param = null)
     {
-        Debug.Log(numChoices);
-        if(numChoices == 1)
-        {
-            btnOption1.gameObject.SetActive(vis);
+        
+
+        #region Set GameObjects Active
+        pnlDisplay.SetActive(true);
+            pnlCharacterName.SetActive(true);
+            txtDisplay.gameObject.SetActive(true);
+            txtCharacterName.gameObject.SetActive(true);
+        btnNext.gameObject.SetActive(true);
+        btnPrevious.gameObject.SetActive(true);
+        txtNext.gameObject.SetActive(true);
+        txtPrevious.gameObject.SetActive(true);
+        #endregion
+        //Dialogue Handled Beneath       
+        if (interactingID == "s")
+        {   //Sage2000 Interaction
+
+            sFin = DialogueManager.Instance.FinThePhoneList.Head;
+            sage = DialogueManager.Instance.Sage2000List.Head;
+            
+            //Futher Check To Determine starting character
+            if(sFin.Data.startCharacterID == "s")
+            {
+                txtCharacterName.text = sage.Data.characterNickname;
+                txtDisplay.text = sage.Data.characterLine;
+                currentID = "s";
+            }
+            else if (sFin.Data.startCharacterID == "f")
+            {
+                txtCharacterName.text = sFin.Data.characterNickname;
+                txtDisplay.text = sFin.Data.characterLine;
+                currentID = "f";
+            }
         }
-        else if (numChoices == 2)
-        {
-            btnOption1.gameObject.SetActive(vis);
-            btnOption3.gameObject.SetActive(vis);
+        else if (DialogueManager.Instance.currentInteraction == "b")
+        {   //SocialBot Interaction
+            //bFin = DialogueManager.Instance.FinThePhoneList.RetriveInteractionHead(DialogueManager.Instance.FinThePhoneList, interactingID);
+            socialB = DialogueManager.Instance.SocialBotList.Head;
+            //Futher Check To Determine starting character
+            if (bFin.Data.startCharacterID == "b")
+            {
+                txtCharacterName.text = socialB.Data.characterNickname;
+                txtDisplay.text = socialB.Data.characterLine;
+                currentID = "b";
+            }
+            else if (bFin.Data.startCharacterID == "f")
+            {
+                txtCharacterName.text = bFin.Data.characterNickname;
+                txtDisplay.text = bFin.Data.characterLine;
+                currentID = "f";
+            }
         }
-        else if (numChoices == 3)
-        {
-            btnOption1.gameObject.SetActive(vis);
-            btnOption2.gameObject.SetActive(vis);
-            btnOption3.gameObject.SetActive(vis);
+
+    }
+
+    public void NextLine()
+    {   //NOTE CURRENT ID WILL ALWAYS BE THE CURRENTLY DISPLAYING ID THIS MEANS IT NEEDS TO BE UPDATED ON CHANGE AND IF THE CURRENT ID IS SOCIAL BOT YOU WILL NEED TO LOAD FIND DIALOGUE
+        if (interactingID == "s")
+        {   //Sage2000 Interaction
+
+            if (sFin.Next != null && sage.Next != null)
+            {
+                sFin = sFin.Next;
+                sage = sage.Next;
+            }
+            else if(sage.Next == null)
+            {
+                #region Set GameObjects False
+                pnlDisplay.SetActive(false);
+                pnlCharacterName.SetActive(false);
+                txtDisplay.gameObject.SetActive(false);
+                txtCharacterName.gameObject.SetActive(false);
+                btnNext.gameObject.SetActive(false);
+                btnPrevious.gameObject.SetActive(false);
+                txtNext.gameObject.SetActive(false);
+                txtPrevious.gameObject.SetActive(false);
+                #endregion
+            }
+            //Futher Check To Determine starting character
+            if (currentID == "s")
+            {
+                txtCharacterName.text = sFin.Previous.Data.characterNickname;
+                txtDisplay.text = sFin.Previous.Data.characterLine;
+                currentID = "f";
+                
+            }
+            else if (currentID == "f")
+            {
+                txtCharacterName.text = sage.Previous.Data.characterNickname;
+                txtDisplay.text = sage.Previous.Data.characterLine;
+                currentID = "s";
+            }
+        }
+        else if (DialogueManager.Instance.currentInteraction == "b")
+        {   //SocialBot Interaction
+            if (bFin.Next != null && socialB.Next != null)
+            {
+                bFin = bFin.Next;
+                socialB = socialB.Next;
+            }              
+            //Futher Check To Determine starting character
+            if (currentID == "b")
+            {
+                txtCharacterName.text = bFin.Previous.Data.characterNickname;
+                txtDisplay.text = bFin.Previous.Data.characterLine;
+                currentID = "f";
+
+            }
+            else if (currentID == "f")
+            {
+                txtCharacterName.text = socialB.Previous.Data.characterNickname;
+                txtDisplay.text = socialB.Previous.Data.characterLine;
+                currentID = "b";
+            }
+        }
+    }
+
+    public void PreviousLine()
+    {
+        //NOTE CURRENT ID WILL ALWAYS BE THE CURRENTLY DISPLAYING ID THIS MEANS IT NEEDS TO BE UPDATED ON CHANGE AND IF THE CURRENT ID IS SOCIAL BOT YOU WILL NEED TO LOAD FIND DIALOGUE
+        if (interactingID == "s")
+        {   //Sage2000 Interaction
+
+            if(sFin.Previous != null && sage.Previous != null)
+            {
+                sFin = sFin.Next;
+                sage = sage.Next;
+            }            
+            //Futher Check To Determine starting character
+            if (currentID == "s")
+            {
+                txtCharacterName.text = sFin.Data.characterNickname;
+                txtDisplay.text = sFin.Data.characterLine;
+                currentID = "f";
+
+            }
+            else if (currentID == "f")
+            {
+                txtCharacterName.text = sage.Data.characterNickname;
+                txtDisplay.text = sage.Data.characterLine;
+                currentID = "s";
+            }
+        }
+        else if (DialogueManager.Instance.currentInteraction == "b")
+        {   //SocialBot Interaction
+
+            if (bFin.Previous != null && socialB.Previous != null)
+            {
+                bFin = bFin.Next;
+                socialB = socialB.Next;
+            }
+            //Futher Check To Determine starting character
+            if (currentID == "b")
+            {
+                txtCharacterName.text = bFin.Data.characterNickname;
+                txtDisplay.text = bFin.Data.characterLine;
+                currentID = "f";
+
+            }
+            else if (currentID == "f")
+            {
+                txtCharacterName.text = socialB.Data.characterNickname;
+                txtDisplay.text = socialB.Data.characterLine;
+                currentID = "b";
+            }
         }
     }
 
@@ -78,188 +222,181 @@ public class DialogueController : MonoBehaviour
         Application.Quit();
     }
 
-    IEnumerator waiter()
-    {        
 
-        //Wait for 0.5 seconds
-        yield return new WaitForSecondsRealtime(0.5f);
-        Debug.Log("waited");
-        Debug.Log("here");
-        
-        //Debug.Log(response.possibleResponses[DialogueManager.Instance.playerChoice]);
-        //Debug.Log(DialogueManager.Instance.playerChoice);       
+    //public void NextDialogue(int lineID, int[] posResponeses)
+    //{
+    //    tempData = DialogueManager.Instance.Sage2000List.Retrive(posResponeses[DialogueManager.Instance.playerChoice]);
+    //    lineID = tempData.lineID;
+    //    response = DialogueManager.Instance.FinThePhoneList.FindNode(DialogueManager.Instance.FinThePhoneList, lineID,interactingID);
+    //    ReadLine = false;
+    //}
 
-    }
+    //public void DoDialogue()
+    //{
+    //    #region FromTestProgram
+    //    dialogueData tempData = new dialogueData();
+    //    bool finished = false;
+    //    if(DialogueManager.Instance.currentInteraction == "s")
+    //    {
+    //        //The speaker variable will be used to determine & switch the speaker. 0 = SAGE & 1 = FIN          
+    //        if (speaker == -1)
+    //        {
+    //            speaker = 0;
+    //            if (countSage == DialogueManager.Instance.Sage2000List.Length) { Debug.Log("this2"); finished = true; speaker = -2; }
+    //        }
+    //        else if (speaker == 0 && !finished)
+    //        {
+    //            pnlDisplayMaterial.color = Color.yellow;
+    //            tempData = DialogueManager.Instance.Sage2000List.Retrive(countSage);
+    //            SetText(tempData.characterNickname, tempData.characterLine);
+    //            NextLine();
+    //            if (ReadLine) { speaker = 1; ReadLine = false; countSage++; }
+    //        }
+    //        else if (speaker == 1 && !finished)
+    //        {
+    //            pnlDisplayMaterial.color = Color.green;
+    //            tempData = DialogueManager.Instance.FinThePhoneList.Retrive(countFin);
+    //            SetText(tempData.characterNickname, tempData.characterLine);
+    //            NextLine();
+    //            if (ReadLine) { speaker = -1; ReadLine = false; countFin++; }
+    //        }
+    //        if (speaker == -2 && finished == true)
+    //        {
+    //            countFin = 0;
+    //            countSage = 0;
+    //            speaker = 0;
+    //            Debug.Log("here");
+    //            pnlDisplay.SetActive(false);
+    //            pnlCharacterName.SetActive(false);
+    //            txtDisplay.gameObject.SetActive(false);
+    //            txtCharacterName.gameObject.SetActive(false);
+    //            DialogueManager.Instance.clicked = false;
+    //        }
+    //    }
+    //    else if (DialogueManager.Instance.currentInteraction == "b")
+    //    {
+    //        //Debug.Log(countFin);
+    //        //The speaker variable will be used to determine & switch the speaker. 0 = SocialBot & 1 = FIN          
+    //        if (speaker == -1)
+    //        {
+    //            speaker = 0;
+    //            //Debug.Log(countSocial);
+    //            //Debug.Log(DialogueManager.Instance.SocialBotList.Length);
+    //            if (countSocial == DialogueManager.Instance.SocialBotList.Length-1) { Debug.Log("this2"); finished = true; speaker = -2; }
+    //        }
+    //        else if (speaker == 0 && !finished)
+    //        {
+    //            pnlDisplayMaterial.color = Color.red;
+    //            tempData = DialogueManager.Instance.SocialBotList.Retrive(countSocial);
+    //            SetText(tempData.characterNickname, tempData.characterLine);
+    //            NextLine();
+    //            if (ReadLine) { speaker = 1; ReadLine = false; countSocial++; }
+    //        }
+    //        else if (speaker == 1 && !finished)
+    //        {
+    //            pnlDisplayMaterial.color = Color.green;
+    //            tempData = DialogueManager.Instance.FinThePhoneList.Retrive(countFin);
+    //            SetText(tempData.characterNickname, tempData.characterLine);
+    //            NextLine();
+    //            if (ReadLine) { speaker = -1; ReadLine = false; countFin++; }
+    //        }
+    //        if (speaker == -2 && finished == true)
+    //        {
+    //            countFin = 0;
+    //            countSage = 0;
+    //            countSocial = 0;
+    //            speaker = 0;
+    //            Debug.Log("here");
+    //            pnlDisplay.SetActive(false);
+    //            pnlCharacterName.SetActive(false);
+    //            txtDisplay.gameObject.SetActive(false);
+    //            txtCharacterName.gameObject.SetActive(false);
+    //            DialogueManager.Instance.clicked = false;
+    //        }
+    //    }
+    //    #endregion
 
-    public void NextDialogue(int lineID, int[] posResponeses)
-    {
-        tempData = DialogueManager.Instance.Sage2000List.Retrive(posResponeses[DialogueManager.Instance.playerChoice]);
-        lineID = tempData.lineID;
-        response = DialogueManager.Instance.FinThePhoneList.FindNode(DialogueManager.Instance.FinThePhoneList, lineID, interactingID);
-        ReadLine = false;
-    }
+    //     #region working on implementing dialogue using all the fields available       
 
-    public void DoDialogue()
-    {
-        #region FromTestProgram
-        dialogueData tempData = new dialogueData();
-        bool finished = false;
-        if(DialogueManager.Instance.currentInteraction == "s")
-        {
-            //The speaker variable will be used to determine & switch the speaker. 0 = SAGE & 1 = FIN          
-            if (speaker == -1)
-            {
-                speaker = 0;
-                if (countSage == DialogueManager.Instance.Sage2000List.Length) { Debug.Log("this2"); finished = true; speaker = -2; }
-            }
-            else if (speaker == 0 && !finished)
-            {
-                pnlDisplayMaterial.color = Color.yellow;
-                tempData = DialogueManager.Instance.Sage2000List.Retrive(countSage);
-                SetText(tempData.characterNickname, tempData.characterLine);
-                NextLine();
-                if (ReadLine) { speaker = 1; ReadLine = false; countSage++; }
-            }
-            else if (speaker == 1 && !finished)
-            {
-                pnlDisplayMaterial.color = Color.green;
-                tempData = DialogueManager.Instance.FinThePhoneList.Retrive(countFin);
-                SetText(tempData.characterNickname, tempData.characterLine);
-                NextLine();
-                if (ReadLine) { speaker = -1; ReadLine = false; countFin++; }
-            }
-            if (speaker == -2 && finished == true)
-            {
-                countFin = 0;
-                countSage = 0;
-                speaker = 0;
-                Debug.Log("here");
-                pnlDisplay.SetActive(false);
-                pnlCharacterName.SetActive(false);
-                txtDisplay.gameObject.SetActive(false);
-                txtCharacterName.gameObject.SetActive(false);
-                DialogueManager.Instance.clicked = false;
-            }
-        }
-        else if (DialogueManager.Instance.currentInteraction == "b")
-        {
-            //Debug.Log(countFin);
-            //The speaker variable will be used to determine & switch the speaker. 0 = SocialBot & 1 = FIN          
-            if (speaker == -1)
-            {
-                speaker = 0;
-                Debug.Log(countSocial);
-                Debug.Log(DialogueManager.Instance.SocialBotList.Length);
-                if (countSocial == DialogueManager.Instance.SocialBotList.Length-1) { Debug.Log("this2"); finished = true; speaker = -2; }
-            }
-            else if (speaker == 0 && !finished)
-            {
-                pnlDisplayMaterial.color = Color.red;
-                tempData = DialogueManager.Instance.SocialBotList.Retrive(countSocial);
-                SetText(tempData.characterNickname, tempData.characterLine);
-                NextLine();
-                if (ReadLine) { speaker = 1; ReadLine = false; countSocial++; }
-            }
-            else if (speaker == 1 && !finished)
-            {
-                pnlDisplayMaterial.color = Color.green;
-                tempData = DialogueManager.Instance.FinThePhoneList.Retrive(countFin);
-                SetText(tempData.characterNickname, tempData.characterLine);
-                NextLine();
-                if (ReadLine) { speaker = -1; ReadLine = false; countFin++; }
-            }
-            if (speaker == -2 && finished == true)
-            {
-                countFin = 0;
-                countSage = 0;
-                countSocial = 0;
-                speaker = 0;
-                Debug.Log("here");
-                pnlDisplay.SetActive(false);
-                pnlCharacterName.SetActive(false);
-                txtDisplay.gameObject.SetActive(false);
-                txtCharacterName.gameObject.SetActive(false);
-                DialogueManager.Instance.clicked = false;
-            }
-        }
-        #endregion
+    //        //interactingID = DialogueManager.Instance.currentInteraction;
 
-            #region working on implementing dialogue using all the fields available       
+    //        //if(interactingID == "s")
+    //        //{
+    //        //    if(tempData.lineID == 0)
+    //        //    {
+    //        //        tempData = DialogueManager.Instance.Sage2000List.Retrive(_lineID);
+    //        //        _lineID = tempData.lineID;
+    //        //        response = DialogueManager.Instance.FinThePhoneList.FindNode(DialogueManager.Instance.FinThePhoneList, _lineID, interactingID);
+    //        //        SetText(tempData.characterNickname, tempData.characterLine);
+    //        //        ChangeBtnVis(2, true);
+    //        //        (txtCharacterName.text, txtOption1.text) = DialogueManager.Instance.FinThePhoneList.FindLine(DialogueManager.Instance.FinThePhoneList, _lineID, interactingID);
+    //        //        (txtCharacterName.text, txtOption3.text) = DialogueManager.Instance.FinThePhoneList.FindLine(DialogueManager.Instance.FinThePhoneList, -1, interactingID);
+    //        //        int[] tempPosChoice = tempData.possibleResponses;
+    //        //        tempData = DialogueManager.Instance.Sage2000List.FindNode(DialogueManager.Instance.Sage2000List, response.possibleResponses[DialogueManager.Instance.playerChoice], interactingID);
+    //        //        response = DialogueManager.Instance.FinThePhoneList.FindNode(DialogueManager.Instance.FinThePhoneList, tempPosChoice[DialogueManager.Instance.playerChoice], interactingID);
+    //        //    }
+    //        //    else
+    //        //    {
+    //        //        if(!ReadLine)
+    //        //        {
+    //        //            SetText(tempData.characterNickname, tempData.characterLine);
+    //        //            ChangeBtnVis(tempData.possibleResponses.Length, true);
+    //        //            if (tempData.possibleResponses.Length == 1)
+    //        //            {
+    //        //                (txtCharacterName.text, txtOption1.text) = DialogueManager.Instance.FinThePhoneList.FindLine(DialogueManager.Instance.FinThePhoneList, tempData.possibleResponses[0], interactingID);
+    //        //                //lineID++;
 
-            //interactingID = DialogueManager.Instance.currentInteraction;
+    //        //            }
+    //        //            else if (tempData.possibleResponses.Length == 2)
+    //        //            {
+    //        //                (txtCharacterName.text, txtOption1.text) = DialogueManager.Instance.FinThePhoneList.FindLine(DialogueManager.Instance.FinThePhoneList, tempData.possibleResponses[0], interactingID);
+    //        //                (txtCharacterName.text, txtOption3.text) = DialogueManager.Instance.FinThePhoneList.FindLine(DialogueManager.Instance.FinThePhoneList, tempData.possibleResponses[1], interactingID);
+    //        //                //lineID++;
+    //        //            }
+    //        //            else if (tempData.possibleResponses.Length == 3)
+    //        //            {
+    //        //                (txtCharacterName.text, txtOption1.text) = DialogueManager.Instance.FinThePhoneList.FindLine(DialogueManager.Instance.FinThePhoneList, tempData.possibleResponses[0], interactingID);
+    //        //                (txtCharacterName.text, txtOption2.text) = DialogueManager.Instance.FinThePhoneList.FindLine(DialogueManager.Instance.FinThePhoneList, tempData.possibleResponses[2], interactingID);
+    //        //                (txtCharacterName.text, txtOption3.text) = DialogueManager.Instance.FinThePhoneList.FindLine(DialogueManager.Instance.FinThePhoneList, tempData.possibleResponses[1], interactingID);
+    //        //                //lineID++;
+    //        //            }
 
-            //if(interactingID == "s")
-            //{
-            //    if(tempData.lineID == 0)
-            //    {
-            //        tempData = DialogueManager.Instance.Sage2000List.Retrive(_lineID);
-            //        _lineID = tempData.lineID;
-            //        response = DialogueManager.Instance.FinThePhoneList.FindNode(DialogueManager.Instance.FinThePhoneList, _lineID, interactingID);
-            //        SetText(tempData.characterNickname, tempData.characterLine);
-            //        ChangeBtnVis(2, true);
-            //        (txtCharacterName.text, txtOption1.text) = DialogueManager.Instance.FinThePhoneList.FindLine(DialogueManager.Instance.FinThePhoneList, _lineID, interactingID);
-            //        (txtCharacterName.text, txtOption3.text) = DialogueManager.Instance.FinThePhoneList.FindLine(DialogueManager.Instance.FinThePhoneList, -1, interactingID);
-            //        int[] tempPosChoice = tempData.possibleResponses;
-            //        tempData = DialogueManager.Instance.Sage2000List.FindNode(DialogueManager.Instance.Sage2000List, response.possibleResponses[DialogueManager.Instance.playerChoice], interactingID);
-            //        response = DialogueManager.Instance.FinThePhoneList.FindNode(DialogueManager.Instance.FinThePhoneList, tempPosChoice[DialogueManager.Instance.playerChoice], interactingID);
-            //    }
-            //    else
-            //    {
-            //        if(!ReadLine)
-            //        {
-            //            SetText(tempData.characterNickname, tempData.characterLine);
-            //            ChangeBtnVis(tempData.possibleResponses.Length, true);
-            //            if (tempData.possibleResponses.Length == 1)
-            //            {
-            //                (txtCharacterName.text, txtOption1.text) = DialogueManager.Instance.FinThePhoneList.FindLine(DialogueManager.Instance.FinThePhoneList, tempData.possibleResponses[0], interactingID);
-            //                //lineID++;
+    //        //            if (Input.GetKeyDown(KeyCode.Mouse0))
+    //        //            {
+    //        //                NextLine();
+    //        //            }
 
-            //            }
-            //            else if (tempData.possibleResponses.Length == 2)
-            //            {
-            //                (txtCharacterName.text, txtOption1.text) = DialogueManager.Instance.FinThePhoneList.FindLine(DialogueManager.Instance.FinThePhoneList, tempData.possibleResponses[0], interactingID);
-            //                (txtCharacterName.text, txtOption3.text) = DialogueManager.Instance.FinThePhoneList.FindLine(DialogueManager.Instance.FinThePhoneList, tempData.possibleResponses[1], interactingID);
-            //                //lineID++;
-            //            }
-            //            else if (tempData.possibleResponses.Length == 3)
-            //            {
-            //                (txtCharacterName.text, txtOption1.text) = DialogueManager.Instance.FinThePhoneList.FindLine(DialogueManager.Instance.FinThePhoneList, tempData.possibleResponses[0], interactingID);
-            //                (txtCharacterName.text, txtOption2.text) = DialogueManager.Instance.FinThePhoneList.FindLine(DialogueManager.Instance.FinThePhoneList, tempData.possibleResponses[2], interactingID);
-            //                (txtCharacterName.text, txtOption3.text) = DialogueManager.Instance.FinThePhoneList.FindLine(DialogueManager.Instance.FinThePhoneList, tempData.possibleResponses[1], interactingID);
-            //                //lineID++;
-            //            }
+    //        //            if (ReadLine == true)
+    //        //            {
+    //        //                //txtOption1.text = "";
+    //        //                //txtOption2.text = "";
+    //        //                //txtOption3.text = "";
+    //        //                //Debug.Log(tempData.possibleResponses[0]);
+    //        //                //StartCoroutine(waiter());
+    //        //                NextDialogue(_lineID, tempData.possibleResponses);
+    //        //            }
+    //        //        }
 
-            //            if (Input.GetKeyDown(KeyCode.Mouse0))
-            //            {
-            //                NextLine();
-            //            }
-
-            //            if (ReadLine == true)
-            //            {
-            //                //txtOption1.text = "";
-            //                //txtOption2.text = "";
-            //                //txtOption3.text = "";
-            //                //Debug.Log(tempData.possibleResponses[0]);
-            //                //StartCoroutine(waiter());
-            //                NextDialogue(_lineID, tempData.possibleResponses);
-            //            }
-            //        }
-
-            //    }
-            //}
-            //else if (interactingID == "b")
-            //{
-            //    if (tempData == null)
-            //    {
-            //        tempData = DialogueManager.Instance.SocialBotList.Retrive(_lineID);
-            //        _lineID = tempData.lineID;
-            //    }
+    //        //    }
+    //        //}
+    //        //else if (interactingID == "b")
+    //        //{
+    //        //    if (tempData == null)
+    //        //    {
+    //        //        tempData = DialogueManager.Instance.SocialBotList.Retrive(_lineID);
+    //        //        _lineID = tempData.lineID;
+    //        //    }
 
 
-            //}
+    //        //}
 
-            #endregion
-    }
+    //        #endregion
+    //}
+
+    //public void BeginDiaglogue()
+    //{
+
+    //}
 
     public void SetText(string characterName, string characterLine)
     {
@@ -267,27 +404,25 @@ public class DialogueController : MonoBehaviour
         txtDisplay.text = characterLine;
     }
 
-    public void NextLine()
-    {
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            //Debug.Log("hi");
-            //if (speaker == 0) speaker = 1; else speaker = 0;
-            if (ReadLine) { ReadLine = false; }
-            else if (!ReadLine) { ReadLine = true; ; }
+    //public void NextLine()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Mouse0))
+    //    {
+    //        //Debug.Log("hi");
+    //        //if (speaker == 0) speaker = 1; else speaker = 0;
+    //        if (ReadLine) { ReadLine = false; }
+    //        else if (!ReadLine) { ReadLine = true; ; }
            
-        }
-    }
+    //    }
+    //}
     // Update is called once per frame
+
     void Update()
     {
         if (DialogueManager.Instance.clicked)
         {
-            pnlDisplay.SetActive(true);
-            pnlCharacterName.SetActive(true);
-            txtDisplay.gameObject.SetActive(true);
-            txtCharacterName.gameObject.SetActive(true);            
-            DoDialogue();
+                      
+            //DoDialogue();
            
         }
     }

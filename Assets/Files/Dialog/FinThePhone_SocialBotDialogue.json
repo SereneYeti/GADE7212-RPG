@@ -1,0 +1,133 @@
+{
+    "fbDialogueALines": [
+        {
+            "characterID": "b",
+            "characterNickname": "SocialBot",
+            "dialogueSequence": "a",
+            "reqInv": "",
+            "lineID": 0,
+            "endTalkArrPos": -1,
+            "characterLine": "Hey there Fin! It's been a while!",
+            "possibleResponses": [
+                0,
+                -1
+            ]
+        },
+        {
+            "characterID": "f",
+            "startCharacterID": "b",
+            "characterNickname": "FinThePhone",
+            "dialogueSequence": "B",
+            "reqInv": "",
+            "lineID": 0,
+            "endTalkPos": -1,
+            "characterLine": "Hey SB it really has! the last time I saw you was just before i got sick!",
+            "possibleResponses": [ 0 ]
+          },
+          {
+            "characterID": "b",
+            "characterNickname": "SocialBot",
+            "dialogueSequence": "a",
+            "reqInv": "",
+            "lineID": 1,
+            "endTalkArrPos": -1,
+            "characterLine": "What have you been up to since?",
+            "possibleResponses": [
+                1
+            ]
+        },
+        {
+            "characterID": "f",
+            "startCharacterID": "b",
+            "characterNickname": "FinThePhone",
+            "dialogueSequence": "B",
+            "reqInv": "",
+            "lineID": 1,
+            "endTalkPos": -1,
+            "characterLine": "I...\nI don't remember...",
+            "possibleResponses": [ 1 ]
+          },
+          {
+            "characterID": "b",
+            "characterNickname": "SocialBot",
+            "dialogueSequence": "a",
+            "reqInv": "",
+            "lineID": 2,
+            "endTalkArrPos": -1,
+            "characterLine": "Well that really sucks! Maybe that item can help you!",
+            "possibleResponses": [
+                2
+            ]
+        },
+        {
+            "characterID": "f",
+            "startCharacterID": "b",
+            "characterNickname": "FinThePhone",
+            "dialogueSequence": "B",
+            "reqInv": "",
+            "lineID": 2,
+            "endTalkPos": -1,
+            "characterLine": "What Item?",
+            "possibleResponses": [ 3 ]
+          },
+          {
+            "characterID": "b",
+            "characterNickname": "SocialBot",
+            "dialogueSequence": "a",
+            "reqInv": "",
+            "lineID": 3,
+            "endTalkArrPos": -1,
+            "characterLine": "The one by that rad Plug Point",
+            "possibleResponses": [
+                3
+            ]
+        },
+        {
+            "characterID": "f",
+            "startCharacterID": "b",
+            "characterNickname": "FinThePhone",
+            "dialogueSequence": "B",
+            "reqInv": "",
+            "lineID": 3,
+            "endTalkPos": -1,
+            "characterLine": "oh the one that everyone has heard of?",
+            "possibleResponses": [ 4 ]
+          },
+          {
+            "characterID": "b",
+            "characterNickname": "SocialBot",
+            "dialogueSequence": "a",
+            "reqInv": "",
+            "lineID": 4,
+            "endTalkArrPos": -1,
+            "characterLine": "Thats the one! Hope you find it bro! I gots to go!",
+            "possibleResponses": [
+                5
+            ]
+        }, 
+        {
+            "characterID": "f",
+            "startCharacterID": "b",
+            "characterNickname": "FinThePhone",
+            "dialogueSequence": "B",
+            "reqInv": "",
+            "lineID": -1,
+            "endTalkPos": -1,
+            "characterLine": "See you around SB!",
+            "possibleResponses": []
+          },
+          {
+            "characterID": "b",
+            "characterNickname": "SocialBot",
+            "dialogueSequence": "a",
+            "reqInv": "",
+            "lineID": -1,
+            "endTalkPos": -1,
+            "characterLine": "Cheers!",
+            "possibleResponses": [
+                -1
+            ]
+        }     
+    ]
+}
+   

@@ -9,12 +9,18 @@ public class MyNode<T>
     {
         get;
         set;
-    }
-
+    } = null;
+    //Stores previous node
+    public MyNode<T> Previous
+    {
+        get;
+        set;
+    } = null;
     //Referenece to the data held in the list i.e in this case the dialogueData class
     public T Data
     {
         get;
         set;
     }
+    
 }

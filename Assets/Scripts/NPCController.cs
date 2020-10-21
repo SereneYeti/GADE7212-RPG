@@ -12,27 +12,37 @@ public class NPCController : MonoBehaviour
     bool canClick = false;
 
     public DialogueController dialogue;
-    private void OnMouseDown()
-    {        
+    private void Start()
+    {
+        //EventManager.Instance.AddListener(EVENT_TYPE.NPC_Click, SendClickNotifacation);
+    }
+    public void SendClickNotifacation()
+    {
         if (canClick)
         {
             DialogueManager.Instance.clicked = true;
+            dialogue.interactingID = this.tag;
         }
-        if(this.tag == CharacterIDs.s.ToString()) { DialogueManager.Instance.currentInteraction = CharacterIDs.s.ToString(); }
+        if (this.tag == CharacterIDs.s.ToString()) { DialogueManager.Instance.currentInteraction = CharacterIDs.s.ToString(); }
         else if (this.tag == CharacterIDs.b.ToString()) { DialogueManager.Instance.currentInteraction = CharacterIDs.b.ToString(); dialogue.countFin = 9; }
+        EventManager.Instance.PostNotification(EVENT_TYPE.NPC_Click, this);
+    }
+    private void OnMouseDown()
+    {   
+        SendClickNotifacation();
     }
 
     private void OnMouseEnter()
     {
         if (this.tag == CharacterIDs.s.ToString()) { if (WithinDistance()) m.color = Color.green; }
-        else if (this.tag == CharacterIDs.b.ToString()) { if (WithinDistance()) m.color = Color.red; }
+        else if (this.tag == CharacterIDs.b.ToString()) { if (WithinDistance()) m2.color = Color.red; }
         
     }
 
     private void OnMouseExit()
     {
         if (this.tag == CharacterIDs.s.ToString()) { if (WithinDistance()) m.color = Color.yellow; }
-        else if (this.tag == CharacterIDs.b.ToString()) { if (WithinDistance()) m.color = Color.black; }
+        else if (this.tag == CharacterIDs.b.ToString()) { if (WithinDistance()) m2.color = Color.black; }
         
     }
 
@@ -48,7 +58,7 @@ public class NPCController : MonoBehaviour
     private void Update()
     {
         if (this.tag == CharacterIDs.s.ToString()) { if (WithinDistance()) { canClick = true; m.color = Color.green; } else { canClick = false; m.color = Color.yellow; } }
-        else if (this.tag == CharacterIDs.b.ToString()) { if (WithinDistance()) { canClick = true; m.color = Color.red; } else { canClick = false; m.color = Color.black; } }
+        else if (this.tag == CharacterIDs.b.ToString()) { if (WithinDistance()) { canClick = true; m2.color = Color.red; } else { canClick = false; m2.color = Color.black; } }
         
 
 

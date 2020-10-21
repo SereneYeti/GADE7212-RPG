@@ -9,9 +9,8 @@ public class DataManager : MonoBehaviour
     public dialogueData DialogueData = new dialogueData();
 
     #region arrayClasses
-    public readSage2000Lines ReadSage2000Lines = new readSage2000Lines();
-    public readFinThePhoneLines ReadFinThePhoneLines = new readFinThePhoneLines();
-    public readSocialBotLines ReadSocialBotLines = new readSocialBotLines();
+    public fs_DialogueALines fsdialogueA = new fs_DialogueALines();
+    public fb_DialogueALines fbdialogueA = new fb_DialogueALines();
     #endregion
 
     public string file
@@ -27,43 +26,29 @@ public class DataManager : MonoBehaviour
         WriteToFile(_file, json);
     }
 
-    public void Load(string charID)
+    public void LoadFS()
     {
         string json = ReadFromFile(file);
         //Debug.Log(json);
 
-        if(charID == CharacterIDs.s.ToString())
-        {
-            ReadSage2000Lines = JsonUtility.FromJson<readSage2000Lines>(json);
-            //Debug.Log(ReadLines.sage2000Lines[0].characterNickname);
-            DialogueManager.Instance.ReadDataOutOfArray(ReadSage2000Lines.sage2000Lines);
-        }
-        else if (charID == CharacterIDs.f.ToString())
-        {
-            ReadFinThePhoneLines = JsonUtility.FromJson<readFinThePhoneLines>(json);
-            //Debug.Log(ReadFinThePhoneLines.FinThePhoneLines[0].characterNickname);
-            DialogueManager.Instance.ReadDataOutOfArray(ReadFinThePhoneLines.FinThePhoneLines);
-        }
-        else if (charID == CharacterIDs.b.ToString())
-        {
-            ReadSocialBotLines = JsonUtility.FromJson<readSocialBotLines>(json);
-            //Debug.Log(ReadFinThePhoneLines.FinThePhoneLines[0].characterNickname);
-            DialogueManager.Instance.ReadDataOutOfArray(ReadSocialBotLines.SocialBotLines);
-        }
+        fsdialogueA = JsonUtility.FromJson<fs_DialogueALines>(json);
+        //Debug.Log(fsdialogueA.fsDialogueALines[0].characterNickname);
+        DialogueManager.Instance.ReadDataOutOfArray(fsdialogueA.fsDialogueALines, DialogueManager.Instance.Fin_SageList);
 
-        #region Commented out testing
-        //DialogueManager.Instance.Sage2000Dialogue.Add(JsonUtility.FromJson<dialogueData>(json));
-        //Debug.Log(DialogueManager.Instance.Sage2000Dialogue.Head.Data.characterLine);
+        //fbdialogueA = JsonUtility.FromJson<fb_DialogueALines>(json);        
+        //DialogueManager.Instance.ReadDataOutOfArray(fbdialogueA.fbDialogueALines, DialogueManager.Instance.Fin_BotList);
 
-        // DialogueManager.Instance.Sage2000Dialogue.Add(JsonUtility.FromJson<dialogueData>(json));
-        //Debug.Log(DialogueManager.Instance.Sage2000Dialogue.Tail.Data.characterLine);
+    }
 
-        //DialogueData.CharacterNickname = "t";
-        //JsonUtility.FromJson<dialogueData>
-        //JsonUtility.FromJsonOverwrite(json, DialogueData);
+    public void LoadFB()
+    {
+        string json = ReadFromFile(file);
+        //Debug.Log(json);
 
-        //dialogueData[dialogueData.Count].Count++;
-        #endregion
+        fbdialogueA = JsonUtility.FromJson<fb_DialogueALines>(json);
+        //Debug.Log(fbdialogueA.fbDialogueALines[0].characterNickname);
+        DialogueManager.Instance.ReadDataOutOfArray(fbdialogueA.fbDialogueALines, DialogueManager.Instance.Fin_BotList);
+
     }
 
     private void WriteToFile(string fileName, string json)
@@ -99,6 +84,6 @@ public class DataManager : MonoBehaviour
 
     private string GetFilePath(string FileName)
     {
-        return Path.Combine(Application.persistentDataPath, FileName);
+        return Path.Combine(Application.dataPath,"Files/Dialog", FileName);
     }    
 }
