@@ -6,6 +6,11 @@ TagManager:
   tags:
   - s
   - b
+  - chest
+  - key
+  - lamp
+  - matches
+  - table
   layers:
   - Default
   - TransparentFX

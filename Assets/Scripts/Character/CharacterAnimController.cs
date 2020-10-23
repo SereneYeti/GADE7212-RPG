@@ -33,19 +33,31 @@ public class CharacterAnimController : MonoBehaviour
 
     private void Animate(string boolName)
     {
-        DisableOTherAnimations(animator, boolName);
+        DisableOtherAnimations(animator, boolName);
 
-        animator.SetBool(boolName, true);
+        try { animator.SetBool(boolName, true); }
+        catch (System.Exception e)
+        {
+            Debug.Log(e);
+        }       
     }
 
-    private void DisableOTherAnimations(Animator animator, string animation)
+    private void DisableOtherAnimations(Animator animator, string animation)
     {
-        foreach(AnimatorControllerParameter parameter in animator.parameters)
+        try
         {
-            if(parameter.name != animation)
+            foreach (AnimatorControllerParameter parameter in animator.parameters)
             {
-                animator.SetBool(parameter.name, false);
+                if (parameter.name != animation)
+                {
+                    animator.SetBool(parameter.name, false);
+                }
             }
+
+        }
+        catch (System.Exception e)
+        {
+            Debug.Log(e);
         }
     }
 }

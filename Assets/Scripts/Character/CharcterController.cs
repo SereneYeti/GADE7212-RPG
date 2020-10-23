@@ -17,7 +17,7 @@ public class CharcterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!DialogueManager.Instance.clicked)
+        if (!DialogueManager.Instance.clicked&&!UIManager.Instance.InWriter)
         {
             Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
             character.Move(move * Time.deltaTime * Speed);
@@ -31,6 +31,10 @@ public class CharcterController : MonoBehaviour
                 characterAnim.AnimateIdle();
             }
                 
-        }            
+        }
+        else
+        {
+            characterAnim.AnimateIdle();
+        }
     }
 }
